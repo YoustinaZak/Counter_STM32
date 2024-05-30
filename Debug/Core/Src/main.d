@@ -22,7 +22,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Core/Inc/../../Drivers/Device_Drivers/HD44780_LCD.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/../../ARM_Drivers/Delay_Micros/dwt_stm32_delay.h
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/../../ARM_Drivers/Delay_Micros/dwt_stm32_delay.h \
+ ../Core/Inc/../../Drivers/Device_Drivers/Matrix_Keypad.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -48,3 +49,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Core/Inc/../../Drivers/Device_Drivers/HD44780_LCD.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/../../ARM_Drivers/Delay_Micros/dwt_stm32_delay.h:
+../Core/Inc/../../Drivers/Device_Drivers/Matrix_Keypad.h:

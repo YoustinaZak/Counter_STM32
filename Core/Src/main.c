@@ -49,9 +49,18 @@ Alcd_t lcd1={
 		.RS_GPIO_Pin=GPIO_PIN_4,
 		.EN_GPIO=GPIOA,
 		.EN_GPIO_Pin=GPIO_PIN_5,
-
 };
+
 char stringaya[10];
+
+Keypad_Matrix_t kp={
+		.Rows = 4,
+		.Columns = 4,
+		.Row_Port = GPIOB,
+		.Column_Port = GPIOB,
+		.Row_Start_Pin = 12,
+		.Column_Start_Pin = 6
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,9 +105,11 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   Alcd_Init(& lcd1, 2, 0);
+
+
   Alcd_PutAt_n(&lcd1, 1, 0, "Youstina", 8);
   HAL_Delay(3000);
-  HAL_Delay(3000);
+
   Alcd_Clear(&lcd1);
   uint8_t HH=0;
   uint8_t MM=0;
@@ -109,38 +120,63 @@ int main(void)
 
 
   /* USER CODE END 2 */
-
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  Keypad_Matrix_init(&kp);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(SS>=0 && SS<59)
+	  Keypad_Matrix_refresh(&kp);
+	  if(Keypad_Matrix_ReadKey(&kp, 1))
 	  {
-		  SS++;
-	  }
-	  if(SS==59)
-	  {
-		 MM++;
-		 SS=0;
-	  }
-	  if(MM==59)
-	  {
+		  while(1)
+		  {
+			  Keypad_Matrix_refresh(&kp);
+			  if(Keypad_Matrix_ReadKey(&kp, 2))
+			  {
+				  while(1)
+				  {
+					  Keypad_Matrix_refresh(&kp);
+					  if(Keypad_Matrix_ReadKey(&kp, 1))
+					  {
+						  break;
+					  }
+					  if(Keypad_Matrix_ReadKey(&kp, 3))
+					  {
+					  	SS=0; MM=0; HH=0;
+					  }
+				  }
+			  }
+			  if(Keypad_Matrix_ReadKey(&kp, 3))
+			  {
+				  SS=0; MM=0; HH=0;
+			  }
+			  if(SS>=0 && SS<59)
+			  {
+				  SS++;
+			  }
+			  if(SS==59)
+			  {
+				  MM++;
+				  SS=0;
+			  }
+			  if(MM==59)
+			  {
+				  HH++;
+				  MM=0;
+			  }
+			  if(HH==59 && MM==59 && SS==59)
+			  {
+				  HH=0;
+			  }
+			  HAL_Delay(1000);
+			  sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
+			  length =sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
+			  Alcd_PutAt_n(&lcd1,0, 0, stringaya, length);
 
-		  HH++;
-			  MM=0;
+		  }
 	  }
-	  if(HH==59 && MM==59 && SS==59)
-	  {
-		  HH=0;
-	  }
-	  HAL_Delay(1000);
-	  sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
-	  length =sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
-	  Alcd_PutAt_n(&lcd1,0, 0, stringaya, length);
-
-
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
