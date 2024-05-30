@@ -145,6 +145,7 @@ int main(void)
 					  if(Keypad_Matrix_ReadKey(&kp, 3))
 					  {
 					  	SS=0; MM=0; HH=0;
+					  	break;
 					  }
 				  }
 			  }

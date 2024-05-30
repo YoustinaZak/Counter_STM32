@@ -5,16 +5,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Drivers/Device_Drivers/HD44780_LCD.c \
-../Drivers/Device_Drivers/Matrix_Keypad.c 
+../Drivers/Device_Drivers/HD44780_LCD.c 
 
 OBJS += \
-./Drivers/Device_Drivers/HD44780_LCD.o \
-./Drivers/Device_Drivers/Matrix_Keypad.o 
+./Drivers/Device_Drivers/HD44780_LCD.o 
 
 C_DEPS += \
-./Drivers/Device_Drivers/HD44780_LCD.d \
-./Drivers/Device_Drivers/Matrix_Keypad.d 
+./Drivers/Device_Drivers/HD44780_LCD.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +21,7 @@ Drivers/Device_Drivers/%.o Drivers/Device_Drivers/%.su Drivers/Device_Drivers/%.
 clean: clean-Drivers-2f-Device_Drivers
 
 clean-Drivers-2f-Device_Drivers:
-	-$(RM) ./Drivers/Device_Drivers/HD44780_LCD.cyclo ./Drivers/Device_Drivers/HD44780_LCD.d ./Drivers/Device_Drivers/HD44780_LCD.o ./Drivers/Device_Drivers/HD44780_LCD.su ./Drivers/Device_Drivers/Matrix_Keypad.cyclo ./Drivers/Device_Drivers/Matrix_Keypad.d ./Drivers/Device_Drivers/Matrix_Keypad.o ./Drivers/Device_Drivers/Matrix_Keypad.su
+	-$(RM) ./Drivers/Device_Drivers/HD44780_LCD.cyclo ./Drivers/Device_Drivers/HD44780_LCD.d ./Drivers/Device_Drivers/HD44780_LCD.o ./Drivers/Device_Drivers/HD44780_LCD.su
 
 .PHONY: clean-Drivers-2f-Device_Drivers
 
