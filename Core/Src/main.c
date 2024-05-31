@@ -51,7 +51,7 @@ Alcd_t lcd1={
 		.EN_GPIO_Pin=GPIO_PIN_5,
 };
 
-char stringaya[10];
+char stringaya[16];
 
 Keypad_Matrix_t kp={
 		.Rows = 4,
@@ -114,10 +114,8 @@ int main(void)
   uint8_t HH=0;
   uint8_t MM=0;
   uint8_t SS=0;
-  uint8_t length =sprintf(stringaya, "%d%d%d", HH, MM, SS);
-  //Alcd_PutAt_n(&lcd1,0, 0, stringaya, length);
-  //HAL_Delay(3000);
-
+  uint16_t mm=0;
+  uint8_t length;
 
   /* USER CODE END 2 */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -144,18 +142,23 @@ int main(void)
 					  }
 					  if(Keypad_Matrix_ReadKey(&kp, 3))
 					  {
-					  	SS=0; MM=0; HH=0;
+					  	mm=0; SS=0; MM=0; HH=0;
 					  	break;
 					  }
 				  }
 			  }
 			  if(Keypad_Matrix_ReadKey(&kp, 3))
 			  {
-				  SS=0; MM=0; HH=0;
+				 mm=0; SS=0; MM=0; HH=0;
 			  }
-			  if(SS>=0 && SS<59)
+			  if(mm>=0 && mm<9)
+			  {
+				  mm++;
+			  }
+			  if(mm==9)
 			  {
 				  SS++;
+				  mm=0;
 			  }
 			  if(SS==59)
 			  {
@@ -167,13 +170,13 @@ int main(void)
 				  HH++;
 				  MM=0;
 			  }
-			  if(HH==59 && MM==59 && SS==59)
+			  if(HH==59 && MM==59 && SS==59 && mm==1000)
 			  {
 				  HH=0;
 			  }
-			  HAL_Delay(1000);
-			  sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
-			  length =sprintf(stringaya, "%02d:%02d:%02d", HH, MM, SS);
+			  HAL_Delay(100);
+			  sprintf(stringaya, "%02d:%02d:%02d.%d", HH, MM, SS, mm);
+			  length =sprintf(stringaya, "%02d:%02d:%02d.%d", HH, MM, SS, mm);
 			  Alcd_PutAt_n(&lcd1,0, 0, stringaya, length);
 
 		  }
